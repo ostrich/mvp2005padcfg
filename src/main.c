@@ -516,7 +516,7 @@ static LRESULT CALLBACK wnd_proc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
     case WM_CREATE:
         g_hwnd = hwnd;
         g_status = make_child("STATIC", "Device: detecting...", 0, ID_STATUS);
-        g_prompt = make_child("STATIC", "Press X / Cross on the controller you want to configure.", SS_CENTER, ID_PROMPT);
+        g_prompt = make_child("STATIC", "Preparing controller mapping...", SS_CENTER, ID_PROMPT);
         g_preview = make_child("EDIT", "", WS_BORDER | WS_VSCROLL | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL, ID_PREVIEW);
         SendMessageA(g_preview, WM_SETFONT, (WPARAM)GetStockObject(ANSI_FIXED_FONT), TRUE);
         g_retry_last = make_child("BUTTON", "Retry Last", WS_TABSTOP, ID_RETRY_LAST);
