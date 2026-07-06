@@ -1,75 +1,88 @@
 # mvp2005ctrlcfg
 
-Native Win32 controller configuration wizard for MVP Baseball 2005.
+`mvp2005ctrlcfg` helps create a working controller config for the PC version of
+MVP Baseball 2005.
 
-The tool measures the controller through old DirectInput, then generates an MVP
-`controller.cfg` profile using a PS2-style layout. It does not overwrite the live
-game config. Run it on Windows, or run it under the same Wine/Bottles environment
-as MVP Baseball 2005.
+MVP 2005 uses old DirectInput controller numbers, and those numbers do not always
+match the labels on modern controllers or adapters. This is especially confusing
+under Wine/Bottles, where Linux may report one button order while the game sees
+another. The result is usually a controller that half works: pitching may aim
+correctly, but pitch selection, throws, baserunning, or right-stick actions are
+wrong.
 
-## Requirements
+This utility asks you to press each control, reads the same DirectInput-style
+inputs that MVP sees, and writes a ready-to-use `controller.cfg` profile.
 
-- Windows or Wine
-- `i686-w64-mingw32-gcc` to build from source on Linux
+## What It Does
 
-## Build
+- detects the controller name reported to DirectInput
+- asks for each face button, shoulder button, D-pad direction, and stick direction
+- generates a PS2-style MVP Baseball 2005 mapping
+- saves a new config file without touching your existing `controller.cfg`
+- works on Windows, and under Wine when run in the same prefix as the game
+
+## How To Use It
+
+Run `mvp2005ctrlcfg.exe`.
+
+If you are using Wine or Bottles, run it in the same Wine prefix as MVP Baseball
+2005. For example:
 
 ```sh
-make
+WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005ctrlcfg.exe
 ```
 
-The Windows executable is written to:
+Then:
+
+1. Press X/Cross on the controller you want to configure.
+2. Follow the prompts.
+3. Press Esc to skip a control your controller does not have.
+4. Use `Retry Last` to redo one prompt, or `Retry All` to start over.
+5. Save the generated file.
+
+The default filename includes the controller profile name, for example:
 
 ```text
-release/mvp2005ctrlcfg.exe
+controller.Wireless_Controller.cfg
 ```
 
-## Run
-
-On Windows, run `mvp2005ctrlcfg.exe`.
-
-Under Wine/Bottles, run it in the same prefix as MVP Baseball 2005. For example:
-
-```sh
-WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine release/mvp2005ctrlcfg.exe
-```
-
-## Workflow
-
-1. Start the app.
-2. Press X/Cross on the controller you want to configure. If multiple controllers are attached, the first controller that produces input is selected for the whole mapping session.
-3. Follow each prompt and press or move the requested controller input. Press Esc to skip an input your controller does not have.
-4. Review the generated config.
-5. Save the generated config. The default filename includes the controller profile name, for example `controller.Wireless_Controller.cfg`.
-6. Manually copy or rename it to:
+To use it in MVP, back up your current config and copy or rename the generated
+file to:
 
 ```text
 Documents\MVP Baseball 2005\controller.cfg
 ```
 
-Back up your existing `controller.cfg` before replacing it.
+## Default Layout
 
-Use `Retry Last` to redo the previous prompt, or `Retry All` to restart the mapping session from the beginning.
+The generated profile uses a familiar console-style layout:
 
-## Layout
-
-The generated profile uses MVP's PS2-style controls:
-
-- X: pitch 1, swing, throw home
+- X/Cross: pitch 1, swing, throw home
 - Circle: pitch 2, throw first
 - Square: pitch 3, throw third
 - Triangle: pitch 4, throw second
 - R1: fifth pitch, fake throw
-- L1: switch fielder, advance all
-- R2: relay/cutoff, retreat all
-- D-pad: runner advancement
-- Left stick: player movement and pitch aiming
-- Right stick: dive/jump/slide virtual directions
+- L1: switch fielder, advance all runners
+- R2: relay/cutoff, retreat all runners
+- D-pad: individual runner advancement
+- Left stick: movement and pitch aiming
+- Right stick: dive/jump/slide actions
 
+## Build From Source
 
-## Development Smoke Test
+On Linux, build the Windows executable with MinGW:
 
 ```sh
 make
-WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine release/mvp2005ctrlcfg.exe
 ```
+
+The executable is written to:
+
+```text
+release/mvp2005ctrlcfg.exe
+```
+
+Requirements:
+
+- `i686-w64-mingw32-gcc`
+- `make`
