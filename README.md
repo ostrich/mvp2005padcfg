@@ -5,7 +5,7 @@ MVP Baseball 2005.
 
 MVP 2005 uses old DirectInput controller numbers, and those numbers do not always
 match the labels on modern controllers or adapters. This is especially confusing
-under Wine/Bottles, where Linux may report one button order while the game sees
+under Wine, where Linux may report one button order while the game sees
 another. The result is usually a controller that half works: pitching may aim
 correctly, but pitch selection, throws, baserunning, or right-stick actions are
 wrong.
@@ -25,11 +25,11 @@ inputs that MVP sees, and writes a ready-to-use `controller.cfg` profile.
 
 Run `mvp2005ctrlcfg.exe`.
 
-If you are using Wine or Bottles, run it in the same Wine prefix as MVP Baseball
-2005. For example:
+If you are using Wine, run it in the same Wine prefix as MVP Baseball 2005. For
+example:
 
 ```sh
-WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005ctrlcfg.exe
+WINEPREFIX="/path/to/mvp2005-prefix" wine mvp2005ctrlcfg.exe
 ```
 
 Then:
