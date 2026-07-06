@@ -34,7 +34,7 @@ WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005ct
 
 Then:
 
-1. Press X/Cross on the controller you want to configure.
+1. Press Triangle/north on the controller you want to configure.
 2. Follow the prompts.
 3. Press Esc to skip a control your controller does not have.
 4. Use `Retry Last` to redo one prompt, or `Retry All` to start over.
