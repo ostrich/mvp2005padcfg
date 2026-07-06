@@ -448,6 +448,7 @@ static void start_mapping(void)
     EnableWindow(g_save, FALSE);
     SetTimer(g_hwnd, ID_TIMER, 25, NULL);
     set_prompt();
+    SetFocus(g_preview);
 }
 
 static void retry_step(void)
