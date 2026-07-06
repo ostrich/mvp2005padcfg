@@ -458,6 +458,7 @@ static void retry_step(void)
         g_bindings[g_step] = binding_none();
         if (g_active_device >= 0) g_devices[g_active_device].initialized = 0;
         set_prompt();
+        SetFocus(g_preview);
     }
 }
 
