@@ -1,20 +1,25 @@
-.PHONY: all release run clean
+.PHONY: all check clean run
 
-MINGW_CC ?= i686-w64-mingw32-gcc
+CC      := i686-w64-mingw32-gcc
+CFLAGS  := -Wall -Wextra -Wno-unused-parameter
+LDFLAGS := -mwindows -static
+LDLIBS  := -ldinput -ldxguid -lcomdlg32
 
-EXE := release/mvp2005ctrlcfg.exe
-SRC := src/main.c
+TARGET := release/mvp2005ctrlcfg.exe
+SOURCE := src/main.c
 
-all: $(EXE)
+all: $(TARGET)
 
-release: $(EXE)
-
-$(EXE): $(SRC)
+$(TARGET): $(SOURCE)
 	mkdir -p release
-	$(MINGW_CC) $(SRC) -o $(EXE) -mwindows -static -ldinput -ldxguid -lcomdlg32
+	$(CC) $(CFLAGS) $(SOURCE) -o $(TARGET) $(LDFLAGS) $(LDLIBS)
 
-run: $(EXE)
-	wine $(EXE)
+check:
+	$(CC) $(CFLAGS) -fsyntax-only $(SOURCE)
 
 clean:
-	rm -f $(EXE)
+	rm -f $(TARGET)
+	rmdir release 2>/dev/null || true
+
+run: $(TARGET)
+	wine $(TARGET)

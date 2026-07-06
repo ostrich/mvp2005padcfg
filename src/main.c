@@ -280,7 +280,7 @@ static void update_preview(void)
 
 static void set_prompt(void)
 {
-    char status[512];
+    char status[1024];
     if (g_active_device >= 0) {
         snprintf(status, sizeof(status), "Device: %s  (%lu buttons, %lu axes, %lu POVs)\r\nProfile: %s",
                  g_product_name[0] ? g_product_name : "(none)",
