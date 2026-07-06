@@ -61,9 +61,9 @@ The generated profile uses a familiar console-style layout:
 - Circle: pitch 2, throw first
 - Square: pitch 3, throw third
 - Triangle: pitch 4, throw second
-- R1: fifth pitch, fake throw
+- R1: fifth pitch, fake throw, retreat all runners
 - L1: switch fielder, advance all runners
-- R2: relay/cutoff, retreat all runners
+- R2: relay/cutoff
 - D-pad: individual runner advancement
 - Left stick: movement and pitch aiming
 - Right stick: dive/jump/slide actions
