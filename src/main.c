@@ -28,18 +28,18 @@ typedef struct {
 } Step;
 
 static const Step STEPS[] = {
-    {"triangle", "Press Triangle / north face button", EXPECT_BUTTON},
-    {"cross", "Press X / Cross / south face button", EXPECT_BUTTON},
-    {"circle", "Press Circle / east face button", EXPECT_BUTTON},
-    {"square", "Press Square / west face button", EXPECT_BUTTON},
-    {"l1", "Press L1 / left bumper", EXPECT_BUTTON},
-    {"r1", "Press R1 / right bumper", EXPECT_BUTTON},
-    {"l2", "Press L2 / left trigger", EXPECT_BUTTON},
-    {"r2", "Press R2 / right trigger", EXPECT_BUTTON},
-    {"select", "Press Select / Create / Back", EXPECT_BUTTON},
-    {"start", "Press Start / Options", EXPECT_BUTTON},
-    {"l3", "Press left stick click / L3", EXPECT_BUTTON},
-    {"r3", "Press right stick click / R3", EXPECT_BUTTON},
+    {"north_face", "Press north face button / Triangle", EXPECT_BUTTON},
+    {"south_face", "Press south face button / Cross", EXPECT_BUTTON},
+    {"east_face", "Press east face button / Circle", EXPECT_BUTTON},
+    {"west_face", "Press west face button / Square", EXPECT_BUTTON},
+    {"left_bumper", "Press left bumper / L1", EXPECT_BUTTON},
+    {"right_bumper", "Press right bumper / R1", EXPECT_BUTTON},
+    {"left_trigger", "Press left trigger / L2", EXPECT_BUTTON},
+    {"right_trigger", "Press right trigger / R2", EXPECT_BUTTON},
+    {"back", "Press Back / Select / Create", EXPECT_BUTTON},
+    {"menu", "Press Menu / Start / Options", EXPECT_BUTTON},
+    {"left_stick_click", "Press left stick click / L3", EXPECT_BUTTON},
+    {"right_stick_click", "Press right stick click / R3", EXPECT_BUTTON},
     {"dpad_up", "Press D-pad up", EXPECT_POV},
     {"dpad_down", "Press D-pad down", EXPECT_POV},
     {"dpad_left", "Press D-pad left", EXPECT_POV},
@@ -196,9 +196,12 @@ static void generate_config(void)
 {
     char *p = g_generated;
     size_t remain = sizeof(g_generated);
-    Binding cross = bind_key("cross"), circle = bind_key("circle"), square = bind_key("square"), triangle = bind_key("triangle");
-    Binding l1 = bind_key("l1"), r1 = bind_key("r1"), l2 = bind_key("l2"), r2 = bind_key("r2");
-    Binding select = bind_key("select"), start = bind_key("start"), l3 = bind_key("l3"), r3 = bind_key("r3");
+    Binding south_face = bind_key("south_face"), east_face = bind_key("east_face");
+    Binding west_face = bind_key("west_face"), north_face = bind_key("north_face");
+    Binding left_bumper = bind_key("left_bumper"), right_bumper = bind_key("right_bumper");
+    Binding left_trigger = bind_key("left_trigger"), right_trigger = bind_key("right_trigger");
+    Binding back = bind_key("back"), menu = bind_key("menu");
+    Binding left_stick_click = bind_key("left_stick_click"), right_stick_click = bind_key("right_stick_click");
     Binding dpad_up = bind_key("dpad_up"), dpad_down = bind_key("dpad_down"), dpad_left = bind_key("dpad_left"), dpad_right = bind_key("dpad_right");
     Binding ls_right = bind_key("left_stick_right"), ls_left = bind_key("left_stick_left"), ls_up = bind_key("left_stick_up"), ls_down = bind_key("left_stick_down");
     Binding rs_right = bind_key("right_stick_right"), rs_left = bind_key("right_stick_left"), rs_up = bind_key("right_stick_up"), rs_down = bind_key("right_stick_down");
@@ -208,18 +211,18 @@ static void generate_config(void)
     append_text(&p, &remain, "device= %s\r\nplayer= 1\r\n", g_profile_name);
     append_text(&p, &remain, "number_of_buttons= %lu\r\nnumber_of_povs= %lu\r\nnumber_of_axis= %lu\r\n",
                 (unsigned long)g_caps.dwButtons, (unsigned long)g_caps.dwPOVs, (unsigned long)g_caps.dwAxes);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_START", start);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_SELECT", select);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_CROSS", cross);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_CIRCLE", circle);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_SQUARE", square);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_TRIANGLE", triangle);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_L1", l1);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R1", r1);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_L2", l2);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R2", r2);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_L3", l3);
-    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R3", r3);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_START", menu);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_SELECT", back);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_CROSS", south_face);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_CIRCLE", east_face);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_SQUARE", west_face);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_TRIANGLE", north_face);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_L1", left_bumper);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R1", right_bumper);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_L2", left_trigger);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R2", right_trigger);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_L3", left_stick_click);
+    append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R3", right_stick_click);
     append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_DPAD_UP", dpad_up);
     append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_DPAD_DOWN", dpad_down);
     append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_DPAD_LEFT", dpad_left);
@@ -232,39 +235,39 @@ static void generate_config(void)
     append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R_STICK_LEFT", rs_left);
     append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R_STICK_UP", rs_up);
     append_binding(&p, &remain, "VPAD_VIRTUAL_BUTTON_R_STICK_DOWN", rs_down);
-    append_binding(&p, &remain, "VPAD_PITCH_1", cross);
-    append_binding(&p, &remain, "VPAD_PITCH_2", circle);
-    append_binding(&p, &remain, "VPAD_PITCH_3", square);
-    append_binding(&p, &remain, "VPAD_PITCH_4", triangle);
-    append_binding(&p, &remain, "VPAD_PITCH_5", r1);
-    append_binding(&p, &remain, "VPAD_FIELD_PICK_OFF_THROW_FIRST", circle);
-    append_binding(&p, &remain, "VPAD_FIELD_PICK_OFF_THROW_SECOND", triangle);
-    append_binding(&p, &remain, "VPAD_FIELD_PICK_OFF_THROW_THIRD", square);
-    append_binding(&p, &remain, "VPAD_PITCH_OUT", cross);
+    append_binding(&p, &remain, "VPAD_PITCH_1", south_face);
+    append_binding(&p, &remain, "VPAD_PITCH_2", east_face);
+    append_binding(&p, &remain, "VPAD_PITCH_3", west_face);
+    append_binding(&p, &remain, "VPAD_PITCH_4", north_face);
+    append_binding(&p, &remain, "VPAD_PITCH_5", right_bumper);
+    append_binding(&p, &remain, "VPAD_FIELD_PICK_OFF_THROW_FIRST", east_face);
+    append_binding(&p, &remain, "VPAD_FIELD_PICK_OFF_THROW_SECOND", north_face);
+    append_binding(&p, &remain, "VPAD_FIELD_PICK_OFF_THROW_THIRD", west_face);
+    append_binding(&p, &remain, "VPAD_PITCH_OUT", south_face);
     append_binding(&p, &remain, "VPAD_THROW_BALL", binding_none());
-    append_binding(&p, &remain, "VPAD_INTENTIONAL_WALK", r3);
-    append_binding(&p, &remain, "VPAD_INTENTIONAL_HITBATTER", l3);
-    append_binding(&p, &remain, "VPAD_PITCH_HISTORY_OPEN", l3);
-    append_binding(&p, &remain, "VPAD_SWING_NORMAL", cross);
-    append_binding(&p, &remain, "VPAD_SWING_BUNT", r3);
-    append_binding(&p, &remain, "VPAD_CHARGE_MOUND", triangle);
-    append_binding(&p, &remain, "VPAD_FIELD_THROW_FIRST", circle);
-    append_binding(&p, &remain, "VPAD_FIELD_THROW_SECOND", triangle);
-    append_binding(&p, &remain, "VPAD_FIELD_THROW_THIRD", square);
-    append_binding(&p, &remain, "VPAD_FIELD_THROW_HOME", cross);
-    append_binding(&p, &remain, "VPAD_FIELD_SWITCH", l1);
-    append_binding(&p, &remain, "VPAD_FIELD_RELAY_THROW", r2);
-    append_binding(&p, &remain, "VPAD_FIELD_CUTOFF_THROW", r2);
-    append_binding(&p, &remain, "VPAD_FIELD_FAKE_RUNDOWN_THROW", r1);
-    append_binding(&p, &remain, "VPAD_RUNNER_FIRST_SELECT", circle);
-    append_binding(&p, &remain, "VPAD_RUNNER_SECOND_SELECT", triangle);
-    append_binding(&p, &remain, "VPAD_RUNNER_THIRD_SELECT", square);
+    append_binding(&p, &remain, "VPAD_INTENTIONAL_WALK", right_stick_click);
+    append_binding(&p, &remain, "VPAD_INTENTIONAL_HITBATTER", left_stick_click);
+    append_binding(&p, &remain, "VPAD_PITCH_HISTORY_OPEN", left_stick_click);
+    append_binding(&p, &remain, "VPAD_SWING_NORMAL", south_face);
+    append_binding(&p, &remain, "VPAD_SWING_BUNT", right_stick_click);
+    append_binding(&p, &remain, "VPAD_CHARGE_MOUND", north_face);
+    append_binding(&p, &remain, "VPAD_FIELD_THROW_FIRST", east_face);
+    append_binding(&p, &remain, "VPAD_FIELD_THROW_SECOND", north_face);
+    append_binding(&p, &remain, "VPAD_FIELD_THROW_THIRD", west_face);
+    append_binding(&p, &remain, "VPAD_FIELD_THROW_HOME", south_face);
+    append_binding(&p, &remain, "VPAD_FIELD_SWITCH", left_bumper);
+    append_binding(&p, &remain, "VPAD_FIELD_RELAY_THROW", right_trigger);
+    append_binding(&p, &remain, "VPAD_FIELD_CUTOFF_THROW", right_trigger);
+    append_binding(&p, &remain, "VPAD_FIELD_FAKE_RUNDOWN_THROW", right_bumper);
+    append_binding(&p, &remain, "VPAD_RUNNER_FIRST_SELECT", east_face);
+    append_binding(&p, &remain, "VPAD_RUNNER_SECOND_SELECT", north_face);
+    append_binding(&p, &remain, "VPAD_RUNNER_THIRD_SELECT", west_face);
     append_binding(&p, &remain, "VPAD_RUNNER_RUNFIRST", dpad_right);
     append_binding(&p, &remain, "VPAD_RUNNER_RUNSECOND", dpad_up);
     append_binding(&p, &remain, "VPAD_RUNNER_RUNTHIRD", dpad_left);
     append_binding(&p, &remain, "VPAD_RUNNER_RUNHOME2SCORE", dpad_down);
-    append_binding(&p, &remain, "VPAD_BASERUNNER_ADVANCEALL", l1);
-    append_binding(&p, &remain, "VPAD_BASERUNNER_RETREATALL", r1);
+    append_binding(&p, &remain, "VPAD_BASERUNNER_ADVANCEALL", left_bumper);
+    append_binding(&p, &remain, "VPAD_BASERUNNER_RETREATALL", right_bumper);
 }
 
 static void update_preview(void)

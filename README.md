@@ -34,7 +34,7 @@ WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005pa
 
 Then:
 
-1. Press Triangle/north on the controller you want to configure.
+1. Press north face button/Triangle on the controller you want to configure.
 2. Follow the prompts.
 3. Press Esc to skip a control your controller does not have.
 4. Use `Retry Last` to redo one prompt, or `Start Over` to restart mapping.
@@ -57,13 +57,13 @@ Documents\MVP Baseball 2005\controller.cfg
 
 The generated profile uses a familiar console-style layout:
 
-- X/Cross: pitch 1, swing, throw home
-- Circle: pitch 2, throw first
-- Square: pitch 3, throw third
-- Triangle: pitch 4, throw second
-- R1: fifth pitch, fake throw, retreat all runners
-- L1: switch fielder, advance all runners
-- R2: relay/cutoff
+- South face button/Cross: pitch 1, swing, throw home
+- East face button/Circle: pitch 2, throw first
+- West face button/Square: pitch 3, throw third
+- North face button/Triangle: pitch 4, throw second
+- Right bumper/R1: fifth pitch, fake throw, retreat all runners
+- Left bumper/L1: switch fielder, advance all runners
+- Right trigger/R2: relay/cutoff
 - D-pad: individual runner advancement
 - Left stick: movement and pitch aiming
 - Right stick: dive/jump/slide actions
