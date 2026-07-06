@@ -1,4 +1,4 @@
-.PHONY: all check clean run
+.PHONY: all check clean
 
 CC      := i686-w64-mingw32-gcc
 CFLAGS  := -Wall -Wextra -Wno-unused-parameter
@@ -20,6 +20,3 @@ check:
 clean:
 	rm -f $(TARGET)
 	rmdir release 2>/dev/null || true
-
-run: $(TARGET)
-	wine $(TARGET)
