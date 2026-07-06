@@ -29,7 +29,7 @@ If you are using Wine, run it in the same Wine prefix as MVP Baseball 2005. For
 example:
 
 ```sh
-WINEPREFIX="/path/to/mvp2005-prefix" wine mvp2005ctrlcfg.exe
+WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005ctrlcfg.exe
 ```
 
 Then:
