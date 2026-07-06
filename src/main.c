@@ -493,6 +493,34 @@ static void save_config(void)
     MessageBoxA(g_hwnd, "Saved generated config.\n\nBack up your existing controller.cfg, then copy or rename this file to controller.cfg.", APP_TITLE, MB_ICONINFORMATION);
 }
 
+static void focus_next_button(int reverse)
+{
+    HWND buttons[] = {g_retry_last, g_retry_all, g_save};
+    int count = (int)(sizeof(buttons) / sizeof(buttons[0]));
+    HWND current = GetFocus();
+    int current_index = -1;
+
+    for (int i = 0; i < count; i++) {
+        if (buttons[i] == current) {
+            current_index = i;
+            break;
+        }
+    }
+
+    for (int step = 1; step <= count; step++) {
+        int index;
+        if (reverse) {
+            index = current_index < 0 ? count - step : (current_index - step + count) % count;
+        } else {
+            index = current_index < 0 ? step - 1 : (current_index + step) % count;
+        }
+        if (buttons[index] && IsWindowEnabled(buttons[index])) {
+            SetFocus(buttons[index]);
+            return;
+        }
+    }
+}
+
 static HWND make_child(const char *class_name, const char *text, DWORD style, int id)
 {
     return CreateWindowExA(0, class_name, text, style | WS_CHILD | WS_VISIBLE,
@@ -594,7 +622,8 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmd, int show)
             skip_current_step();
             continue;
         }
-        if (IsDialogMessageA(hwnd, &msg)) {
+        if (msg.message == WM_KEYDOWN && msg.wParam == VK_TAB) {
+            focus_next_button(GetKeyState(VK_SHIFT) < 0);
             continue;
         }
         TranslateMessage(&msg);
