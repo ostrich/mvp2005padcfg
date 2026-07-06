@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define APP_TITLE "MVP 2005 Controller Config"
+#define APP_TITLE "MVP 2005 Gamepad Config"
 #define MAX_BINDINGS 64
 #define MAX_DEVICES 8
 #define PREVIEW_SIZE 16384
@@ -616,7 +616,7 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmd, int show)
     ZeroMemory(&wc, sizeof(wc));
     wc.lpfnWndProc = wnd_proc;
     wc.hInstance = inst;
-    wc.lpszClassName = "MVP2005CtrlCfgWnd";
+    wc.lpszClassName = "MVP2005PadCfgWnd";
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.hbrBackground = (HBRUSH)(COLOR_BTNFACE + 1);
     RegisterClassA(&wc);

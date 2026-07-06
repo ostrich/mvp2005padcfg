@@ -5,7 +5,7 @@ CFLAGS  := -O2 -Wall -Wextra -Wno-unused-parameter
 LDFLAGS := -mwindows -static
 LDLIBS  := -ldinput -ldxguid -lcomdlg32
 
-TARGET := release/mvp2005ctrlcfg.exe
+TARGET := release/mvp2005padcfg.exe
 SOURCE := src/main.c
 
 all: $(TARGET)

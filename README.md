@@ -1,6 +1,6 @@
-# mvp2005ctrlcfg
+# mvp2005padcfg
 
-`mvp2005ctrlcfg` helps create a working controller config for the PC version of
+`mvp2005padcfg` helps create a working gamepad config for the PC version of
 MVP Baseball 2005.
 
 MVP 2005 uses old DirectInput controller numbers, and those numbers do not always
@@ -23,13 +23,13 @@ inputs that MVP sees, and writes a ready-to-use `controller.cfg` profile.
 
 ## How To Use It
 
-Run `mvp2005ctrlcfg.exe`.
+Run `mvp2005padcfg.exe`.
 
 If you are using Wine, run it in the same Wine prefix as MVP Baseball 2005. For
 example:
 
 ```sh
-WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005ctrlcfg.exe
+WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005padcfg.exe
 ```
 
 Then:
@@ -79,7 +79,7 @@ make
 The executable is written to:
 
 ```text
-release/mvp2005ctrlcfg.exe
+release/mvp2005padcfg.exe
 ```
 
 Requirements:
