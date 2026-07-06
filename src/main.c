@@ -11,6 +11,7 @@
 #define MAX_BINDINGS 64
 #define MAX_DEVICES 8
 #define PREVIEW_SIZE 16384
+#define SAVE_PATH_SIZE 1024
 
 typedef enum { BIND_NONE, BIND_BUTTON, BIND_AXIS_LOW, BIND_AXIS_HIGH, BIND_POV } BindingType;
 typedef enum { EXPECT_BUTTON, EXPECT_AXIS, EXPECT_POV } ExpectType;
@@ -83,6 +84,12 @@ static Binding binding_none(void)
 {
     Binding b = {BIND_NONE, -1};
     return b;
+}
+
+static void copy_string(char *dst, size_t dst_size, const char *src)
+{
+    if (dst_size == 0) return;
+    snprintf(dst, dst_size, "%s", src ? src : "");
 }
 
 static void append_text(char **p, size_t *remain, const char *fmt, ...)
@@ -391,8 +398,8 @@ static void poll_input(void)
                     if (g_active_device < 0) {
                         g_active_device = d;
                         g_caps = c->caps;
-                        strncpy(g_product_name, c->product_name, sizeof(g_product_name));
-                        strncpy(g_profile_name, c->profile_name, sizeof(g_profile_name));
+                        copy_string(g_product_name, sizeof(g_product_name), c->product_name);
+                        copy_string(g_profile_name, sizeof(g_profile_name), c->profile_name);
                         sanitize_filename_part(g_profile_name, g_file_name, sizeof(g_file_name));
                     }
                     accept_binding(b);
@@ -464,7 +471,7 @@ static void default_save_path(char *out, size_t out_size)
 
 static void save_config(void)
 {
-    char path[MAX_PATH];
+    char path[SAVE_PATH_SIZE];
     default_save_path(path, sizeof(path));
     OPENFILENAMEA ofn;
     ZeroMemory(&ofn, sizeof(ofn));

@@ -1,7 +1,7 @@
 .PHONY: all check clean
 
 CC      := i686-w64-mingw32-gcc
-CFLAGS  := -Wall -Wextra -Wno-unused-parameter
+CFLAGS  := -O2 -Wall -Wextra -Wno-unused-parameter
 LDFLAGS := -mwindows -static
 LDLIBS  := -ldinput -ldxguid -lcomdlg32
 
