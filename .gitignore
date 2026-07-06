@@ -1,5 +1,4 @@
 release/
 *.o
 *.obj
-*.exe
 controller.*.cfg
