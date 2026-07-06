@@ -323,11 +323,19 @@ static BOOL CALLBACK enum_devices(const DIDEVICEINSTANCEA *inst, void *ctx)
     strncpy(c->product_name, inst->tszProductName, sizeof(c->product_name));
     c->product_name[sizeof(c->product_name) - 1] = 0;
     sanitize_name(c->product_name[0] ? c->product_name : c->instance_name, c->profile_name, sizeof(c->profile_name));
-    IDirectInputDevice_SetDataFormat(c->dev, &c_dfDIJoystick);
-    IDirectInputDevice_SetCooperativeLevel(c->dev, hwnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
+    if (FAILED(IDirectInputDevice_SetDataFormat(c->dev, &c_dfDIJoystick)) ||
+        FAILED(IDirectInputDevice_SetCooperativeLevel(c->dev, hwnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND))) {
+        IDirectInputDevice_Release(c->dev);
+        c->dev = NULL;
+        return DIENUM_CONTINUE;
+    }
     ZeroMemory(&c->caps, sizeof(c->caps));
     c->caps.dwSize = sizeof(c->caps);
-    IDirectInputDevice_GetCapabilities(c->dev, &c->caps);
+    if (FAILED(IDirectInputDevice_GetCapabilities(c->dev, &c->caps))) {
+        IDirectInputDevice_Release(c->dev);
+        c->dev = NULL;
+        return DIENUM_CONTINUE;
+    }
     IDirectInputDevice_Acquire(c->dev);
     g_device_count++;
     return DIENUM_CONTINUE;
