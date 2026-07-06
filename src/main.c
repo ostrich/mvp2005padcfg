@@ -54,7 +54,7 @@ static const Step STEPS[] = {
     {"right_stick_right", "Move right stick fully right, then release", EXPECT_AXIS},
 };
 
-enum { ID_STATUS = 100, ID_PROMPT, ID_PREVIEW, ID_RETRY_LAST, ID_RETRY_ALL, ID_SAVE, ID_TIMER };
+enum { ID_STATUS = 100, ID_PROMPT, ID_PREVIEW, ID_RETRY_LAST, ID_START_OVER, ID_SAVE, ID_TIMER };
 
 typedef struct {
     LPDIRECTINPUTDEVICEA dev;
@@ -66,7 +66,7 @@ typedef struct {
     char profile_name[MAX_PATH];
 } Controller;
 
-static HWND g_hwnd, g_status, g_prompt, g_preview, g_retry_last, g_retry_all, g_save;
+static HWND g_hwnd, g_status, g_prompt, g_preview, g_retry_last, g_start_over, g_save;
 static LPDIRECTINPUTA g_di;
 static Controller g_devices[MAX_DEVICES];
 static int g_device_count;
@@ -307,7 +307,7 @@ static void set_prompt(void)
         SetWindowTextA(g_prompt, prompt);
     }
     EnableWindow(g_retry_last, g_step > 0 && g_step < step_count());
-    EnableWindow(g_retry_all, g_step > 0);
+    EnableWindow(g_start_over, g_step > 0);
     update_preview();
 }
 
@@ -497,7 +497,7 @@ static void save_config(void)
 
 static void focus_next_button(int reverse)
 {
-    HWND buttons[] = {g_retry_last, g_retry_all, g_save};
+    HWND buttons[] = {g_retry_last, g_start_over, g_save};
     int count = (int)(sizeof(buttons) / sizeof(buttons[0]));
     HWND current = GetFocus();
     int current_index = -1;
@@ -536,7 +536,7 @@ static void layout_children(int width, int height)
     MoveWindow(g_prompt, margin, 62, width - margin * 2, 48, TRUE);
     MoveWindow(g_preview, margin, 118, width - margin * 2, height - 170, TRUE);
     MoveWindow(g_retry_last, margin, height - 42, 90, 30, TRUE);
-    MoveWindow(g_retry_all, margin + 102, height - 42, 90, 30, TRUE);
+    MoveWindow(g_start_over, margin + 102, height - 42, 90, 30, TRUE);
     MoveWindow(g_save, width - margin - 170, height - 42, 170, 30, TRUE);
 }
 
@@ -550,10 +550,10 @@ static LRESULT CALLBACK wnd_proc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
         g_preview = make_child("EDIT", "", WS_BORDER | WS_VSCROLL | ES_MULTILINE | ES_READONLY | ES_AUTOVSCROLL, ID_PREVIEW);
         SendMessageA(g_preview, WM_SETFONT, (WPARAM)GetStockObject(ANSI_FIXED_FONT), TRUE);
         g_retry_last = make_child("BUTTON", "Retry Last", WS_TABSTOP, ID_RETRY_LAST);
-        g_retry_all = make_child("BUTTON", "Retry All", WS_TABSTOP, ID_RETRY_ALL);
+        g_start_over = make_child("BUTTON", "Start Over", WS_TABSTOP, ID_START_OVER);
         g_save = make_child("BUTTON", "Save Generated Config", WS_TABSTOP, ID_SAVE);
         EnableWindow(g_retry_last, FALSE);
-        EnableWindow(g_retry_all, FALSE);
+        EnableWindow(g_start_over, FALSE);
         EnableWindow(g_save, FALSE);
         for (int i = 0; i < MAX_BINDINGS; i++) g_bindings[i] = binding_none();
         init_dinput(hwnd);
@@ -567,7 +567,7 @@ static LRESULT CALLBACK wnd_proc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
             retry_step();
             return 0;
         }
-        if (LOWORD(wp) == ID_RETRY_ALL) {
+        if (LOWORD(wp) == ID_START_OVER) {
             start_mapping();
             return 0;
         }
