@@ -70,7 +70,7 @@ static LPDIRECTINPUTA g_di;
 static Controller g_devices[MAX_DEVICES];
 static int g_device_count;
 static int g_active_device = -1;
-static char g_instance_name[MAX_PATH], g_product_name[MAX_PATH], g_profile_name[MAX_PATH];
+static char g_product_name[MAX_PATH], g_profile_name[MAX_PATH];
 static char g_file_name[MAX_PATH];
 static DIDEVCAPS g_caps;
 static Binding g_bindings[MAX_BINDINGS];
@@ -391,7 +391,6 @@ static void poll_input(void)
                     if (g_active_device < 0) {
                         g_active_device = d;
                         g_caps = c->caps;
-                        strncpy(g_instance_name, c->instance_name, sizeof(g_instance_name));
                         strncpy(g_product_name, c->product_name, sizeof(g_product_name));
                         strncpy(g_profile_name, c->profile_name, sizeof(g_profile_name));
                         sanitize_filename_part(g_profile_name, g_file_name, sizeof(g_file_name));
@@ -436,7 +435,7 @@ static void start_mapping(void)
     g_step = 0;
     g_active_device = -1;
     g_caps.dwAxes = g_caps.dwButtons = g_caps.dwPOVs = 0;
-    g_instance_name[0] = g_product_name[0] = g_profile_name[0] = g_file_name[0] = 0;
+    g_product_name[0] = g_profile_name[0] = g_file_name[0] = 0;
     for (int i = 0; i < g_device_count; i++) g_devices[i].initialized = 0;
     g_generated[0] = 0;
     EnableWindow(g_save, FALSE);
