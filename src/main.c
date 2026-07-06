@@ -594,6 +594,9 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE prev, LPSTR cmd, int show)
             skip_current_step();
             continue;
         }
+        if (IsDialogMessageA(hwnd, &msg)) {
+            continue;
+        }
         TranslateMessage(&msg);
         DispatchMessageA(&msg);
     }
