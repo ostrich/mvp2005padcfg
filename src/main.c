@@ -30,8 +30,8 @@ typedef struct {
 static const Step STEPS[] = {
     {"north_face", "Press north face button / Triangle", EXPECT_BUTTON},
     {"south_face", "Press south face button / Cross", EXPECT_BUTTON},
-    {"east_face", "Press east face button / Circle", EXPECT_BUTTON},
     {"west_face", "Press west face button / Square", EXPECT_BUTTON},
+    {"east_face", "Press east face button / Circle", EXPECT_BUTTON},
     {"left_bumper", "Press left bumper / L1", EXPECT_BUTTON},
     {"right_bumper", "Press right bumper / R1", EXPECT_BUTTON},
     {"left_trigger", "Press left trigger / L2", EXPECT_BUTTON},
