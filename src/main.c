@@ -14,7 +14,7 @@
 #define SAVE_PATH_SIZE 1024
 
 typedef enum { BIND_NONE, BIND_BUTTON, BIND_AXIS_LOW, BIND_AXIS_HIGH, BIND_POV } BindingType;
-typedef enum { EXPECT_BUTTON, EXPECT_AXIS, EXPECT_POV } ExpectType;
+typedef enum { EXPECT_BUTTON, EXPECT_BUTTON_OR_AXIS, EXPECT_AXIS, EXPECT_POV } ExpectType;
 
 typedef struct {
     BindingType type;
@@ -34,8 +34,8 @@ static const Step STEPS[] = {
     {"east_face", "Press east face button / Circle", EXPECT_BUTTON},
     {"left_bumper", "Press left bumper / L1", EXPECT_BUTTON},
     {"right_bumper", "Press right bumper / R1", EXPECT_BUTTON},
-    {"left_trigger", "Press left trigger / L2", EXPECT_BUTTON},
-    {"right_trigger", "Press right trigger / R2", EXPECT_BUTTON},
+    {"left_trigger", "Press left trigger / L2", EXPECT_BUTTON_OR_AXIS},
+    {"right_trigger", "Press right trigger / R2", EXPECT_BUTTON_OR_AXIS},
     {"back", "Press Back / Select / Create", EXPECT_BUTTON},
     {"menu", "Press Menu / Start / Options", EXPECT_BUTTON},
     {"left_stick_click", "Press left stick click / L3", EXPECT_BUTTON},
@@ -399,7 +399,7 @@ static void poll_input(void)
             continue;
         }
 
-        if (expect == EXPECT_BUTTON) {
+        if (expect == EXPECT_BUTTON || expect == EXPECT_BUTTON_OR_AXIS) {
             for (int i = 0; i < 32; i++) {
                 int was = !!(c->prev.rgbButtons[i] & 0x80);
                 int now = !!(st.rgbButtons[i] & 0x80);
@@ -417,7 +417,9 @@ static void poll_input(void)
                     return;
                 }
             }
-        } else if (expect == EXPECT_AXIS) {
+        }
+
+        if (expect == EXPECT_AXIS || expect == EXPECT_BUTTON_OR_AXIS) {
             LONG prev_axes[6] = {c->prev.lX, c->prev.lY, c->prev.lZ, c->prev.lRx, c->prev.lRy, c->prev.lRz};
             LONG axes[6] = {st.lX, st.lY, st.lZ, st.lRx, st.lRy, st.lRz};
             for (int i = 0; i < 6; i++) {
