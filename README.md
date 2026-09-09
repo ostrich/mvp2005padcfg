@@ -28,17 +28,22 @@ that MVP sees, and writes a new `controller.cfg` profile for the game.
 
 ## How To Use It
 
-Run:
+[Download the latest stable release](https://github.com/ostrich/mvp2005padcfg/releases/latest),
+or try the [latest automated master build](https://github.com/ostrich/mvp2005padcfg/releases/tag/master-build).
+Download the `.exe` asset, named `mvp2005padcfg-v0.1.0.exe` for a versioned
+release or `mvp2005padcfg-master.exe` for the master build.
+
+Run the downloaded executable, using its actual filename. For example:
 
 ```sh
-mvp2005padcfg.exe
+mvp2005padcfg-v0.1.0.exe
 ```
 
 When using Wine, run it inside the same Wine prefix as MVP Baseball 2005. For
 example:
 
 ```sh
-WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005padcfg.exe
+WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005padcfg-v0.1.0.exe
 ```
 
 Then follow the prompts:
@@ -97,3 +102,9 @@ Requirements:
 
 - `i686-w64-mingw32-gcc`
 - `make`
+
+GitHub Actions builds and uploads the Windows x86 executable for pushes and pull
+requests to `master`, `v*` tags, and manual runs. Successful `master` builds update
+the `master-build` prerelease with `mvp2005padcfg-master.exe`. Pushing a version
+tag such as `v0.1.0` creates a GitHub Release with generated notes and
+`mvp2005padcfg-v0.1.0.exe` as a direct download.
