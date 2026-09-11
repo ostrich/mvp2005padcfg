@@ -1,110 +1,80 @@
 # mvp2005padcfg
 
-`mvp2005padcfg` creates a gamepad configuration for the PC version of
-*MVP Baseball 2005*.
+`mvp2005padcfg` creates a gamepad profile for the PC version of MVP Baseball 2005.
 
-MVP 2005 uses old DirectInput button numbers, and those numbers do not always
-match the labels on modern controllers or USB adapters. This is especially
-confusing under Wine, where Linux, Wine, and the game may each report the same
-controller differently.
+The game's DirectInput mappings may not match modern controllers or USB
+adapters. This can put actions on the wrong buttons and cause erratic stick
+behavior, especially when fielding.
 
-The result is often a controller that only partly works: the left stick may aim
-pitches correctly, but pitch selection, throws, baserunning, or right-stick
-actions may be mapped to the wrong buttons.
+Press each button and move each stick as prompted, and the tool records the
+inputs as the game sees them to create a console-style layout. It works on
+Windows and under Wine, and saves a separate file so your existing config stays
+untouched.
 
-This utility walks you through each control, records the DirectInput-style input
-that MVP sees, and writes a new `controller.cfg` profile for the game.
+## How to use it
 
-## What It Does
+Download and run the `.exe` from the
+[latest release](https://github.com/ostrich/mvp2005padcfg/releases/latest) or
+[master build](https://github.com/ostrich/mvp2005padcfg/releases/tag/master-build).
 
-- detects the controller name reported through DirectInput
-- asks you to press each face button, shoulder button, D-pad direction, and stick
-  direction
-- generates a console-style MVP Baseball 2005 controller layout
-- saves the generated profile as a separate file, leaving your existing
-  `controller.cfg` untouched
-- works on Windows and under Wine, as long as it is run in the same Wine prefix
-  as the game
-
-## How To Use It
-
-[Download the latest stable release](https://github.com/ostrich/mvp2005padcfg/releases/latest),
-or try the [latest automated master build](https://github.com/ostrich/mvp2005padcfg/releases/tag/master-build).
-Download the `.exe` asset, named `mvp2005padcfg-v0.1.0.exe` for a versioned
-release or `mvp2005padcfg-master.exe` for the master build.
-
-Run the downloaded executable, using its actual filename. For example:
+Under Wine, use the same prefix as the game. Adjust the path and filename in
+this example:
 
 ```sh
-mvp2005padcfg-v0.1.0.exe
+WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005padcfg-VERSION.exe
 ```
 
-When using Wine, run it inside the same Wine prefix as MVP Baseball 2005. For
-example:
+1. Press the top face button to select your controller.
+2. Follow the prompts to map each control. Press **Esc** to skip a missing
+   control, **Retry Last** to redo a prompt, or **Start Over** to begin again.
+3. Save the profile. The default filename includes your controller's name,
+   such as `controller.Wireless_Controller.cfg`.
+4. Back up your existing `controller.cfg`, then copy or rename the saved file to:
 
-```sh
-WINEPREFIX="$HOME/.local/share/bottles/bottles/MVP-Baseball-2005" wine mvp2005padcfg-v0.1.0.exe
-```
+   ```text
+   Documents\MVP Baseball 2005\controller.cfg
+   ```
 
-Then follow the prompts:
+## Default layout
 
-1. Press the top face button, usually Triangle or Y, on the controller you want
-   to configure.
-2. Press each requested control when prompted.
-3. Press Esc to skip a control your controller does not have.
-4. Use `Retry Last` to redo the previous prompt, or `Start Over` to restart the
-   mapping process.
-5. Save the generated file.
+Common controls in the PlayStation-style layout:
 
-By default, the filename includes the controller profile name, for example:
+| Button | Pitching | Batting/Baserunning | Fielding |
+| --- | --- | --- | --- |
+| South / Cross | Pitch 1; pitchout with L1 | Swing; release quickly to check swing | Throw home |
+| East / Circle | Pitch 2; pickoff to first | Select runner on first | Throw to first |
+| West / Square | Pitch 3; pickoff to third | Select runner on third | Throw to third |
+| North / Triangle | Pitch 4; pickoff to second | Select runner on second; charge mound after being hit | Throw to second |
+| Right bumper / R1 | Pitch 5 | Retreat all runners | Fake throw (after a throw button) |
+| Left bumper / L1 | Hold for quick pickoffs | Advance all runners | Switch fielder |
+| Left trigger / L2 | Hold for normal pickoffs | Hold + left stick: move in batter's box | — |
+| Right trigger / R2 | Bullpen/dugout menu and defensive alignment | — | Relay or cutoff throw |
+| D-pad | Navigate R2 menus | Choose destination base / steal | — |
+| Left stick | Aim pitch | Swing direction | Move player |
+| Right stick | — | Slide / return during a pickoff | Dive / jump / sliding catch |
+| Left stick click / L3 | Pitch history; hit batter with L1 | — | — |
+| Right stick click / R3 | Intentional walk with L1 | Bunt (hold) | — |
+| Start / Menu | Pause | Pause | Pause |
+| Select / Back | — | Pitch/swing analysis replay | — |
 
-```text
-controller.Wireless_Controller.cfg
-```
+For pickoffs, hold L1 for a quick throw or L2 for a normal throw, then press
+the base's face button. In pitch history, use L1/R1 to switch at-bats.
 
-To use the generated profile in MVP Baseball 2005, back up your existing config
-and copy or rename the generated file to:
+For baserunning, select a runner, then use the D-pad: right for first, up for
+second, left for third, or down for home. With no runner selected, commands
+apply to the lead runner.
 
-```text
-Documents\MVP Baseball 2005\controller.cfg
-```
+## Build from source
 
-## Default Layout
-
-The generated profile uses a familiar PlayStation-style layout:
-
-- South face button / Cross: pitch 1, swing, throw home
-- East face button / Circle: pitch 2, throw first
-- West face button / Square: pitch 3, throw third
-- North face button / Triangle: pitch 4, throw second
-- Right bumper / R1: fifth pitch, fake throw, retreat all runners
-- Left bumper / L1: switch fielder, advance all runners
-- Right trigger / R2: relay or cutoff throw
-- D-pad: individual runner advancement
-- Left stick: player movement and pitch aiming
-- Right stick: dive, jump, and slide actions
-
-## Build From Source
-
-On Linux, build the Windows executable with MinGW:
+On Linux, install `make` and MinGW's `i686-w64-mingw32-gcc` and
+`i686-w64-mingw32-strip`, then run:
 
 ```sh
 make
 ```
 
-The executable is written to:
+The Windows executable is saved to `release/mvp2005padcfg.exe`.
 
-```text
-release/mvp2005padcfg.exe
-```
-
-Requirements:
-
-- `i686-w64-mingw32-gcc`
-- `make`
-
-GitHub Actions builds and uploads the Windows x86 executable for pushes and pull
-requests to `master`, `v*` tags, and manual runs. Successful `master` builds update
-the `master-build` prerelease with `mvp2005padcfg-master.exe`. Pushing a version
-tag such as `v0.1.0` creates a GitHub Release with generated notes and
-`mvp2005padcfg-v0.1.0.exe` as a direct download.
+GitHub Actions also builds the executable. Successful `master` builds update the
+[master build](https://github.com/ostrich/mvp2005padcfg/releases/tag/master-build);
+`v*` tags publish versioned releases.
